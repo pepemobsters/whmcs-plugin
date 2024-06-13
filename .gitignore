@@ -23,8 +23,6 @@
 /build/cache/
 /build/docs/
 /build/logs/
-/vendor/
-composer.lock
 composer.phar
 .DS_Store
 modules/gateways/bitpaycheckout/bitpay.txt
