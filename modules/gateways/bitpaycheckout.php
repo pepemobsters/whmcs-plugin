@@ -26,21 +26,23 @@ use BitPaySDK\Model\Invoice\Buyer;
 use BitPaySDK\Model\Facade;
 use WHMCS\Database\Capsule;
 
-// Create a new table.
-try {
-    Capsule::schema()->create(
-        '_bitpay_checkout_transactions',
-        function ($table) {
-            /** @var \Illuminate\Database\Schema\Blueprint $table */
-            $table->increments('id');
-            $table->integer('order_id');
-            $table->string('transaction_id');
-            $table->string('transaction_status');
-            $table->timestamps();
-        }
-    );
-} catch (\Exception $e) {
-    #echo "Unable to create my_table: {$e->getMessage()}";
+// Create a new table, if it doesn't exist
+if (!Capsule::schema()->hasTable('_bitpay_checkout_transactions')) {
+    try {
+        Capsule::schema()->create(
+            '_bitpay_checkout_transactions',
+            function ($table) {
+                /** @var \Illuminate\Database\Schema\Blueprint $table */
+                $table->increments('id');
+                $table->integer('order_id');
+                $table->string('transaction_id');
+                $table->string('transaction_status');
+                $table->timestamps();
+            }
+        );
+    } catch (\Exception $e) {
+        echo "Unable to create my_table: {$e->getMessage()}";
+    }
 }
 
 /**
@@ -227,8 +229,6 @@ function bitpaycheckout_link($config_params)
         $pdo = Capsule::connection()->getPdo();
         $pdo->beginTransaction();
     
-        $created_at = 'Y-m-d';
-        
         try {
             $statement = $pdo->prepare(
                 'insert into _bitpay_checkout_transactions (order_id, transaction_id, transaction_status,created_at) values (:order_id, :transaction_id, :transaction_status,:created_at)'
@@ -239,7 +239,7 @@ function bitpaycheckout_link($config_params)
                     ':order_id' => $config_params['invoiceid'],
                     ':transaction_id' => $basicInvoice->getId(),
                     ':transaction_status' => 'new',
-                    ':created_at' => date($created_at.' H:i:s'),
+                    ':created_at' => date('Y-m-d H:i:s'),
                 ]
             );
             $pdo->commit();

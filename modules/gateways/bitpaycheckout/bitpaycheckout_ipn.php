@@ -84,7 +84,7 @@ if ($btn_id) {
             }
             #update the invoices table
             $table = "tblinvoices";
-            $update = array("status" => 'Paid','datepaid' => date("Y-m-d H:i:s"));
+            $update = array("status" => 'Paid','datepaid' => date('Y-m-d H:i:s'));
             try {
                 Capsule::table($table)
                     ->where([
@@ -98,7 +98,7 @@ if ($btn_id) {
 
             #update the bitpay_invoice table
             $table = "_bitpay_checkout_transactions";
-            $update = array("transaction_status" => "complete", "updated_at" => date("Y-m-d H:i:s"));
+            $update = array("transaction_status" => "complete", "updated_at" => date('Y-m-d H:i:s'));
             try {
                 Capsule::table($table)
                     ->where([
@@ -123,7 +123,7 @@ if ($btn_id) {
         case 'paid':
             #update the invoices table
             $table = "tblinvoices";
-            $update = array("status" => 'Payment Pending','datepaid' => date("Y-m-d H:i:s"));
+            $update = array("status" => 'Payment Pending','datepaid' => date('Y-m-d H:i:s'));
             try {
                 Capsule::table($table)
                     ->where([
