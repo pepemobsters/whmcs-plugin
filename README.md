@@ -6,7 +6,7 @@
 
 This version requires the following:
 
-* WHMCS 7.x | 8.x
+* WHMCS 8.x
 * A BitPay merchant account: 
  * On the [production environment.](https://bitpay.com/dashboard/signup)
  * On the [test environment.](https://test.bitpay.com/dashboard/signup), for sandbox testing.
@@ -41,5 +41,3 @@ An order note will automatically be added with a link to the BitPay invoice to m
  * After the invoice is paid by the user, it will change to a **Payment Pending** status. 
  * When BitPay finalizes the transaction, it will change to a **Paid** status, and your order will be safe to ship, allow access to downloadable products, etc.
  * If you decide to refund a payment via your BitPay dashboard, the WHMCS invoice status will change to **Refunded** once the refund is executed.
-
-
