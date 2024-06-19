@@ -23,7 +23,7 @@ include_once(__DIR__ . DIRECTORY_SEPARATOR . 'bitpaycheckout'
                      . DIRECTORY_SEPARATOR .  'vendor'
                      . DIRECTORY_SEPARATOR . 'autoload.php');
 
-                     use BitPaySDK\PosClient;
+use BitPaySDK\PosClient;
 use BitPaySDK\Model\Invoice\Invoice;
 use BitPaySDK\Model\Invoice\Buyer;
 use BitPaySDK\Model\Facade;
