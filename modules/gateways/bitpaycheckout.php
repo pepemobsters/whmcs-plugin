@@ -19,8 +19,11 @@ if (!defined("WHMCS")) {
     die("This file cannot be accessed directly");
 }
 
-include_once(__DIR__ . DIRECTORY_SEPARATOR . 'bitpaycheckout' . DIRECTORY_SEPARATOR .  'vendor' . DIRECTORY_SEPARATOR . 'autoload.php');
-use BitPaySDK\PosClient;
+include_once(__DIR__ . DIRECTORY_SEPARATOR . 'bitpaycheckout'
+                     . DIRECTORY_SEPARATOR .  'vendor'
+                     . DIRECTORY_SEPARATOR . 'autoload.php');
+
+                     use BitPaySDK\PosClient;
 use BitPaySDK\Model\Invoice\Invoice;
 use BitPaySDK\Model\Invoice\Buyer;
 use BitPaySDK\Model\Facade;
@@ -96,6 +99,7 @@ if (!function_exists('bitpaycheckout_config')) {
                 'Type' => 'text',
                 'Size' => '25',
                 'Default' => '',
+                // @phpcs:ignore Generic.Files.LineLength.TooLong
                 'Description' => 'Your <b>development</b> merchant token.  <a href = "https://test.bitpay.com/dashboard/merchant/api-tokens" target = "_blank">Create one here</a> and <b>uncheck</b> `Require Authentication`.',
             ),
             // a text field type allows for single line text input
@@ -104,6 +108,7 @@ if (!function_exists('bitpaycheckout_config')) {
                 'Type' => 'text',
                 'Size' => '25',
                 'Default' => '',
+                // @phpcs:ignore Generic.Files.LineLength.TooLong
                 'Description' => 'Your <b>production</b> merchant token.  <a href = "https://bitpay.com/dashboard/merchant/api-tokens" target = "_blank">Create one here</a> and <b>uncheck</b> `Require Authentication`.',
             ),
         
@@ -111,12 +116,14 @@ if (!function_exists('bitpaycheckout_config')) {
                 'FriendlyName' => 'Endpoint',
                 'Type' => 'dropdown',
                 'Options' => 'Test,Production',
+                // @phpcs:ignore Generic.Files.LineLength.TooLong
                 'Description' => 'Select <b>Test</b> for testing the plugin, <b>Production</b> when you are ready to go live.<br>',
             ),
             'bitpay_checkout_mode' => array(
                 'FriendlyName' => 'Payment UX',
                 'Type' => 'dropdown',
                 'Options' => 'Modal,Redirect',
+                // @phpcs:ignore Generic.Files.LineLength.TooLong
                 'Description' => 'Select <b>Modal</b> to keep the user on the invoice page, or  <b>Redirect</b> to have them view the invoice at BitPay.com, and be redirected after payment.<br>',
             ),
         );
@@ -147,7 +154,7 @@ function bitpaycheckout_link($config_params)
 
     $client = new PosClient($bitpay_checkout_token, $bitpay_checkout_endpoint);
 
-    #check to make sure we don't already have a valid BitPay Invoice active
+    // Check to make sure we don't already have a valid BitPay Invoice active
     $checkDup = Capsule::table('_bitpay_checkout_transactions')
         ->select('transaction_id')
         ->where('order_id', '=', $config_params['invoiceid'])
@@ -179,7 +186,7 @@ function bitpaycheckout_link($config_params)
         $moduleDisplayName = $config_params['name'];
         $moduleName = $config_params['paymentmethod'];
 
-        #BITPAY INVOICE DETAILS
+        // BITPAY INVOICE DETAILS
         $params = new stdClass();
 
         $dir = dirname($_SERVER['REQUEST_URI']);
@@ -188,13 +195,17 @@ function bitpaycheckout_link($config_params)
         }
 
         $params->orderId = trim($invoiceId);
-        $params->notificationURL = $protocol . $_SERVER['SERVER_NAME'] . $dir . '/modules/gateways/bitpaycheckout/callback/bitpaycheckout_ipn.php';
+        // @phpcs:ignore Generic.Files.LineLength.TooLong
+        $params->notificationURL = $protocol . $_SERVER['SERVER_NAME']. $dir . '/modules/gateways/bitpaycheckout/callback/bitpaycheckout_ipn.php';
+        // @phpcs:ignore Generic.Files.LineLength.TooLong
         $params->redirectURL = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
         $params->fullNotifications = true;
 
         $protocol = 'https://';
 
+        // @phpcs:ignore Generic.Files.LineLength.TooLong
         $notificationURL = $protocol . $_SERVER['SERVER_NAME'] . $dir . '/modules/gateways/bitpaycheckout/callback/bitpaycheckout_ipn.php';
+        // @phpcs:ignore Generic.Files.LineLength.TooLong
         $redirectURL = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
         $invoice = new Invoice($amount, $currencyCode);
@@ -231,6 +242,7 @@ function bitpaycheckout_link($config_params)
     
         try {
             $statement = $pdo->prepare(
+                // @phpcs:ignore Generic.Files.LineLength.TooLong
                 'insert into _bitpay_checkout_transactions (order_id, transaction_id, transaction_status,created_at) values (:order_id, :transaction_id, :transaction_status,:created_at)'
             );
 
@@ -250,8 +262,10 @@ function bitpaycheckout_link($config_params)
     }
 
     if ($bitpay_checkout_mode == 'Modal') {
+        // @phpcs:ignore Generic.Files.LineLength.TooLong
         $htmlOutput .= '<button name = "bitpay-payment" class = "btn btn-success btn-sm" onclick = "showModal(\'' . $basicInvoice->getId() . '\');return false;">' . $config_params['langpaynow'] . '</button>';
     } else {
+        // @phpcs:ignore Generic.Files.LineLength.TooLong
         $htmlOutput .= '<button name = "bitpay-payment" class = "btn btn-success btn-sm" onclick = "redirectURL(\'' . $basicInvoice->getUrl(). '\');return false;">' . $config_params['langpaynow'] . '</button>';
     }
     ?>
@@ -273,7 +287,7 @@ function bitpaycheckout_link($config_params)
             }
         }, false);
         function showModal(){
-            //show the modal
+            // Show the modal
             <?php if ($bitpay_checkout_endpoint == 'Test') : ?>
                 bitpay.enableTestMode()
             <?php endif;?>

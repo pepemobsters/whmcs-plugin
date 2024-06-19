@@ -22,11 +22,12 @@ use WHMCS\Database\Capsule;
 
 // Require libraries needed for gateway module functions.
 require_once  '../../../../init.php';
-require_once  '../../../../includes/gatewayfunctions.php';
-require_once  '../../../../includes/invoicefunctions.php';
+require_once ROOTDIR . "/includes/gatewayfunctions.php";
+require_once ROOTDIR . "/includes/invoicefunctions.php";
 
 // Detect module name from filename.
 $gatewayModuleName = 'bitpaycheckout';
+
 // Fetch gateway configuration parameters.
 $gatewayParams = getGatewayVariables($gatewayModuleName);
 define("TEST_URL", 'https://test.bitpay.com/invoices/');
