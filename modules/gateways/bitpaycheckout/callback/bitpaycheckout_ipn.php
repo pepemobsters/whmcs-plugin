@@ -62,7 +62,7 @@ if ($endpoint == "Test") {
 }
 $invoiceStatus = json_decode(checkInvoiceStatus($url_check));
 
-$orderid = $invoiceStatus->data->orderId;
+$orderid = checkCbInvoiceID($invoiceStatus->data->orderId, 'bitpaycheckout');
 $price = $invoiceStatus->data->price;
 #first see if the ipn matches
 #get the user id first
