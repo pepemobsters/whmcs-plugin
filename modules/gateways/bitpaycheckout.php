@@ -80,8 +80,7 @@ if (!Capsule::schema()->hasTable('_bitpay_checkout_transactions')) {
  * @return array
  */
 
-if (!function_exists('bitpaycheckout_config'))
-{
+if (!function_exists('bitpaycheckout_config')) {
     function bitpaycheckout_config()
     {
         return array(
@@ -119,7 +118,7 @@ if (!function_exists('bitpaycheckout_config'))
                 'Type' => 'dropdown',
                 'Options' => 'Modal,Redirect',
                 'Description' => 'Select <b>Modal</b> to keep the user on the invoice page, or  <b>Redirect</b> to have them view the invoice at BitPay.com, and be redirected after payment.<br>',
-            ),            
+            ),
         );
     }
 }
@@ -137,7 +136,9 @@ function bitpaycheckout_link($config_params)
     $curpage = basename($_SERVER["SCRIPT_FILENAME"]);
     
     $curpage = str_replace("/", "", $curpage);
-    if ($curpage != 'viewinvoice.php'): return;endif;
+    if ($curpage != 'viewinvoice.php') {
+        return;
+    }
     ?>
     <script src="https://bitpay.com/bitpay.min.js" type="text/javascript"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -273,7 +274,7 @@ function bitpaycheckout_link($config_params)
         }, false);
         function showModal(){
             //show the modal
-            <?php if ($bitpay_checkout_endpoint == 'Test'): ?>
+            <?php if ($bitpay_checkout_endpoint == 'Test') : ?>
                 bitpay.enableTestMode()
             <?php endif;?>
                 bitpay.showInvoice('<?php echo $basicInvoice->getId(); ?>');

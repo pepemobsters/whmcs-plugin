@@ -19,6 +19,7 @@
  */
 
 use WHMCS\Database\Capsule;
+
 // Require libraries needed for gateway module functions.
 require_once  '../../../../init.php';
 require_once  '../../../../includes/gatewayfunctions.php';
@@ -31,7 +32,8 @@ $gatewayParams = getGatewayVariables($gatewayModuleName);
 define("TEST_URL", 'https://test.bitpay.com/invoices/');
 define("PROD_URL", 'https://bitpay.com/invoices/');
 
-function checkInvoiceStatus($url) {
+function checkInvoiceStatus($url)
+{
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
@@ -47,10 +49,10 @@ $data = $response['data'];
 $file = 'bitpay.txt';
 $err = "bitpay_err.txt";
 
-file_put_contents($file,"===========INCOMING IPN=========================",FILE_APPEND);
-file_put_contents($file,date('d.m.Y H:i:s'),FILE_APPEND);
-file_put_contents($file,print_r($response, true),FILE_APPEND);
-file_put_contents($file,"===========END OF IPN===========================",FILE_APPEND);
+file_put_contents($file, "===========INCOMING IPN=========================", FILE_APPEND);
+file_put_contents($file, date('d.m.Y H:i:s'), FILE_APPEND);
+file_put_contents($file, print_r($response, true), FILE_APPEND);
+file_put_contents($file, "===========END OF IPN===========================", FILE_APPEND);
     
 $order_status = $data['status'];
 $order_invoice = $data['id'];
@@ -93,16 +95,16 @@ if ($btn_id) {
                         ['transaction_id', '=', $order_invoice],
                     ])
                     ->update($update);
-            } catch (Exception $e ) {
-                file_put_contents($file,$e,FILE_APPEND);
+            } catch (Exception $e) {
+                file_put_contents($file, $e, FILE_APPEND);
             }
 
             addInvoicePayment(
-            $orderid,
-            $order_invoice,
-            $price,
-            0,
-            'bitpaycheckout'
+                $orderid,
+                $order_invoice,
+                $price,
+                0,
+                'bitpaycheckout'
             );
             break;
      
@@ -118,8 +120,8 @@ if ($btn_id) {
                         ['paymentmethod', '=', 'bitpaycheckout'],
                     ])
                     ->update($update);
-            } catch (Exception $e ) {
-                file_put_contents($file,$e,FILE_APPEND);
+            } catch (Exception $e) {
+                file_put_contents($file, $e, FILE_APPEND);
             }
 
             #update the bitpay_invoice table
@@ -132,8 +134,8 @@ if ($btn_id) {
                         ['transaction_id', '=', $order_invoice],
                     ])
                     ->update($update);
-            } catch (Exception $e ) {
-                file_put_contents($file,$e,FILE_APPEND);
+            } catch (Exception $e) {
+                file_put_contents($file, $e, FILE_APPEND);
             }
             break;
      
@@ -145,8 +147,8 @@ if ($btn_id) {
                 Capsule::table($table)
                     ->where('transaction_id', '=', $order_invoice)
                     ->delete();
-            } catch (Exception $e ) {
-                file_put_contents($file,$e,FILE_APPEND);
+            } catch (Exception $e) {
+                file_put_contents($file, $e, FILE_APPEND);
             }
             break;
 
@@ -163,8 +165,8 @@ if ($btn_id) {
                             ['paymentmethod', '=', 'bitpaycheckout'],
                         ])
                         ->update($update);
-                } catch (Exception $e ) {
-                    file_put_contents($file,$e,FILE_APPEND);
+                } catch (Exception $e) {
+                    file_put_contents($file, $e, FILE_APPEND);
                 }
 
                 #update the bitpay invoice table
@@ -177,11 +179,12 @@ if ($btn_id) {
                             ['transaction_id', '=', $order_invoice],
                         ])
                         ->update($update);
-                } catch (Exception $e ) {
-                    file_put_contents($file,$e,FILE_APPEND);
+                } catch (Exception $e) {
+                    file_put_contents($file, $e, FILE_APPEND);
                 }
                 break;
             }
     }
-http_response_code(200);
+
+    http_response_code(200);
 }
