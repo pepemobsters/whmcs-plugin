@@ -1,0 +1,14 @@
+name: Analyze
+
+on: [push, pull_request]
+
+jobs:
+  phpcs:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: PHP_CodeSniffer
+        run: |
+          curl -OL https://phars.phpcodesniffer.com/phpcs.phar
+          php phpcs.phar modules
