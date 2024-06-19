@@ -11,4 +11,4 @@ jobs:
       - name: PHP_CodeSniffer
         run: |
           curl -OL https://phars.phpcodesniffer.com/phpcs.phar
-          php phpcs.phar src
+          php phpcs.phar modules
