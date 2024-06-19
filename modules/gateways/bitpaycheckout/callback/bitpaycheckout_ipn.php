@@ -20,9 +20,9 @@
 
 use WHMCS\Database\Capsule;
 // Require libraries needed for gateway module functions.
-require_once  '../../../init.php';
-require_once  '../../../includes/gatewayfunctions.php';
-require_once  '../../../includes/invoicefunctions.php';
+require_once  '../../../../init.php';
+require_once  '../../../../includes/gatewayfunctions.php';
+require_once  '../../../../includes/invoicefunctions.php';
 
 // Detect module name from filename.
 $gatewayModuleName = 'bitpaycheckout';
@@ -81,19 +81,6 @@ if ($btn_id) {
         case 'complete':
             if ($transaction_status == $data['status']) {
                 exit();
-            }
-            #update the invoices table
-            $table = "tblinvoices";
-            $update = array("status" => 'Paid','datepaid' => date('Y-m-d H:i:s'));
-            try {
-                Capsule::table($table)
-                    ->where([
-                        ['id', '=', $orderid],
-                        ['paymentmethod', '=', 'bitpaycheckout'],
-                    ])
-                    ->update($update);
-            } catch (Exception $e ) {
-                file_put_contents($file,$e,FILE_APPEND);
             }
 
             #update the bitpay_invoice table
@@ -162,6 +149,39 @@ if ($btn_id) {
                 file_put_contents($file,$e,FILE_APPEND);
             }
             break;
+
+        #refunded, set invoice and bitpay transaction to refunded status
+        case 'pending':
+            if ($event['name'] == "refund_pending") {
+                #update the invoices table
+                $table = "tblinvoices";
+                $update = array("status" => 'Refunded','datepaid' => date('Y-m-d H:i:s'));
+                try {
+                    Capsule::table($table)
+                        ->where([
+                            ['id', '=', $orderid],
+                            ['paymentmethod', '=', 'bitpaycheckout'],
+                        ])
+                        ->update($update);
+                } catch (Exception $e ) {
+                    file_put_contents($file,$e,FILE_APPEND);
+                }
+
+                #update the bitpay invoice table
+                $table = "_bitpay_checkout_transactions";
+                $update = array("transaction_status" => 'refunded', "updated_at" => date('Y-m-d H:i:s'));
+                try {
+                    Capsule::table($table)
+                        ->where([
+                            ['order_id', '=', $orderid],
+                            ['transaction_id', '=', $order_invoice],
+                        ])
+                        ->update($update);
+                } catch (Exception $e ) {
+                    file_put_contents($file,$e,FILE_APPEND);
+                }
+                break;
+            }
     }
 http_response_code(200);
 }

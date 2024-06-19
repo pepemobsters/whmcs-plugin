@@ -187,14 +187,13 @@ function bitpaycheckout_link($config_params)
         }
 
         $params->orderId = trim($invoiceId);
-        $params->notificationURL = $protocol . $_SERVER['SERVER_NAME'] . $dir . '/modules/gateways/bitpaycheckout/bitpaycheckout_ipn.php';
+        $params->notificationURL = $protocol . $_SERVER['SERVER_NAME'] . $dir . '/modules/gateways/bitpaycheckout/callback/bitpaycheckout_ipn.php';
         $params->redirectURL = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
         $params->fullNotifications = true;
 
         $protocol = 'https://';
 
-        $callback_url = $protocol . $_SERVER['SERVER_NAME'] . $dir . '/modules/gateways/bitpaycheckout/bitpaycheckout_callback.php';
-        $notificationURL = $protocol . $_SERVER['SERVER_NAME'] . $dir . '/modules/gateways/bitpaycheckout/bitpaycheckout_ipn.php';
+        $notificationURL = $protocol . $_SERVER['SERVER_NAME'] . $dir . '/modules/gateways/bitpaycheckout/callback/bitpaycheckout_ipn.php';
         $redirectURL = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
         $invoice = new Invoice($amount, $currencyCode);
@@ -248,6 +247,7 @@ function bitpaycheckout_link($config_params)
             $pdo->rollBack();
         }
     }
+
     if ($bitpay_checkout_mode == 'Modal') {
         $htmlOutput .= '<button name = "bitpay-payment" class = "btn btn-success btn-sm" onclick = "showModal(\'' . $basicInvoice->getId() . '\');return false;">' . $config_params['langpaynow'] . '</button>';
     } else {
@@ -259,42 +259,21 @@ function bitpaycheckout_link($config_params)
         function redirectURL($url){
             window.location=$url;
         }
-        function showModal(invoiceData) {
-            $post_url = '<?php echo $callback_url; ?>'
-            $idx = $post_url.indexOf('https')
-            if($idx == -1 && location.protocol == 'https:'){
-                $post_url = $post_url.replace('http','https');
+
+        var payment_status = null;
+        var is_paid = false;
+        window.addEventListener("message", function(event) {
+            payment_status = event.data.status;
+            if(payment_status == 'paid' || payment_status == 'confirmed' || payment_status == 'complete'){
+                is_paid = true;
             }
-                    
-            $encodedData = invoiceData;
-            invoiceData = atob(invoiceData);
-
-            var payment_status = null;
-            var is_paid = false;
-            window.addEventListener("message", function(event) {
-                payment_status = event.data.status;
-                if(payment_status == 'paid' || payment_status == 'confirmed' || payment_status == 'complete'){
-                    is_paid = true;
-                }
-                if (is_paid == true) {
-                    //just some test stuff
-                    var saveData = jQuery.ajax({
-                        type: 'POST',
-                        url: $post_url,
-                        data: $encodedData,
-                        dataType: "text",
-                        success: function(resultData) {
-                            window.location.reload();
-                        },
-                        error: function(resultData) {
-                            //console.log('error', resultData)
-                        }
-                    });
-                }
-            }, false);
-
+            if (is_paid == true) {
+                window.location.reload();
+            }
+        }, false);
+        function showModal(){
             //show the modal
-            <?php if ($bitpay_checkout_endpoint == 'test'): ?>
+            <?php if ($bitpay_checkout_endpoint == 'Test'): ?>
                 bitpay.enableTestMode()
             <?php endif;?>
                 bitpay.showInvoice('<?php echo $basicInvoice->getId(); ?>');
