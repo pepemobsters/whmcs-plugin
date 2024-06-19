@@ -1,0 +1,18 @@
+name: Analyze
+
+on: [push, pull_request]
+
+jobs:
+  phpcs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: php-actions/composer@v6
+        with:
+          php_version: 8.1
+          php_extensions: bcmath gmp xdebug
+      - name: PHP_CodeSniffer
+        run: |
+          curl -OL https://phars.phpcodesniffer.com/phpcs.phar
+          php phpcs.phar src
