@@ -65,13 +65,14 @@ $invoiceStatus = json_decode(checkInvoiceStatus($url_check));
 $orderid = checkCbInvoiceID($invoiceStatus->data->orderId, 'bitpaycheckout');
 $price = $invoiceStatus->data->price;
 #first see if the ipn matches
-#get the user id first
-$table = "_bitpay_checkout_transactions";
-$fields = "order_id,transaction_id,transaction_status";
-$where = array("order_id" => $orderid,"transaction_id" => $order_invoice);
-
-$result = select_query($table, $fields, $where);
-$rowdata = mysql_fetch_array($result);
+$trans_data = Capsule::table('_bitpay_checkout_transactions')
+    ->select('order_id', 'transaction_id', 'transaction_status')
+    ->where([
+        ['order_id', '=', $orderid],
+        ['transaction_id', '=', $order_invoice],
+    ])
+    ->get();
+$rowdata = (array) $trans_data[0];
 $btn_id = $rowdata['transaction_id'];
 $transaction_status = $rowdata['transaction_status'];
 
