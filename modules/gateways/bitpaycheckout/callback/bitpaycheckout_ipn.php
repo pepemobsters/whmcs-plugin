@@ -62,7 +62,7 @@ $invoiceStatus = json_decode(checkInvoiceStatus($url_check));
 
 $orderid = checkCbInvoiceID($invoiceStatus->data->orderId, 'bitpaycheckout');
 $price = $invoiceStatus->data->price;
-//first see if the ipn matches
+// First see if the ipn matches
 $trans_data = Capsule::table('_bitpay_checkout_transactions')
     ->select('order_id', 'transaction_id', 'transaction_status')
     ->where([
@@ -76,13 +76,13 @@ $transaction_status = $rowdata['transaction_status'];
 
 if ($btn_id) {
     switch ($data['status']) {
-        //complete, update invoice table to Paid
+        // Complete, update invoice table to Paid
         case 'complete':
             if ($transaction_status == $data['status']) {
                 exit();
             }
 
-            //update the bitpay_invoice table
+            // Update the bitpay_invoice table
             $table = '_bitpay_checkout_transactions';
             $update = array('transaction_status' => 'complete', 'updated_at' => date('Y-m-d H:i:s'));
             try {
@@ -105,9 +105,9 @@ if ($btn_id) {
             );
             break;
      
-        //processing - put in Payment Pending
+        // Processing - put in Payment Pending
         case 'paid':
-            //update the invoices table
+            // Update the invoices table
             $table = 'tblinvoices';
             $update = array("status" => 'Payment Pending','datepaid' => date('Y-m-d H:i:s'));
             try {
@@ -121,7 +121,7 @@ if ($btn_id) {
                 file_put_contents($file, $e, FILE_APPEND);
             }
 
-            //update the bitpay_invoice table
+            // Update the bitpay_invoice table
             $table = '_bitpay_checkout_transactions';
             $update = array('transaction_status' => 'paid', 'updated_at' => date('Y-m-d H:i:s'));
             try {
@@ -136,9 +136,9 @@ if ($btn_id) {
             }
             break;
      
-        //expired, remove from transaction table, wont be in invoice table
+        // Expired, remove from transaction table, wont be in invoice table
         case 'expired':
-            //delete any orphans
+            // Delete any orphans
             $table = '_bitpay_checkout_transactions';
             try {
                 Capsule::table($table)
@@ -149,7 +149,7 @@ if ($btn_id) {
             }
             break;
 
-        //refunded, set invoice and bitpay transaction to refunded status
+        // Refunded, set invoice and bitpay transaction to refunded status
         case 'pending':
             if ($event['name'] == 'refund_pending') {
                 //update the invoices table
@@ -166,7 +166,7 @@ if ($btn_id) {
                     file_put_contents($file, $e, FILE_APPEND);
                 }
 
-                //update the bitpay invoice table
+                // Update the bitpay invoice table
                 $table = '_bitpay_checkout_transactions';
                 $update = array('transaction_status' => 'refunded', 'updated_at' => date('Y-m-d H:i:s'));
                 try {
