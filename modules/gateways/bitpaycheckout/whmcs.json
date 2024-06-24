@@ -1,0 +1,35 @@
+{
+    "schema": "1.0",
+    "type": "whmcs-gateways",
+    "name": "BitPayCheckout",
+    "license": "MIT",
+    "category": "payments",
+    "description": {
+        "name": "BitPay Checkout",
+        "tagline": "Accept payments via crypto currency using BitPay",
+        "features": [
+            "Accept bitcoin and bitcoin cash payments from payment protocol compatible wallets",
+            "Price in your local currency",
+            "Get settled via Bank transfer (EUR, USD, GBP or any of the supported fiat currencies), BTC, BCH, ETH, WBTC, LTC, DOGE, XRP or stable coins (USDC, GUSD, PAXOS, BUSD and DAI)",
+            "By design, chargebacks are not possible with cryptocurrency payments",
+            "Have an overview of all your bitcoin and bitcoin cash payments in your BitPay merchant account at https://bitpay.com/dashboard",
+            "Refund your customers in bitcoin or bitcoin cash in your BitPay merchant dashboard at https://bitpay.com/dashboard/payments"
+          ]
+    },
+    "logo": {
+        "filename": "icon-256x256.png"
+    },
+    "support": {
+        "homepage": "https:\/\/www.bitpay.com\/", 
+        "learn_more": "https:\/\/www.bitpay.com\/online-payments", 
+        "email": "support@bitpay.com", 
+        "support_url": "https:\/\/www.bitpay.com\/request-help",
+        "docs_url": "https:\/\/developer.bitpay.com\/"
+    },
+    "authors": [
+        {
+            "name": "BitPay",
+            "homepage": "https:\/\/www.bitpay.com\/"
+        }
+    ]
+}

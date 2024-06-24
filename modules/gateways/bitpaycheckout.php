@@ -15,11 +15,11 @@
  * @license http://www.whmcs.com/license/ WHMCS Eula
  */
 
-if (!defined("WHMCS")) {
-    die("This file cannot be accessed directly");
+if (!defined('WHMCS')) {
+    die('This file cannot be accessed directly');
 }
 
-include_once(__DIR__ . DIRECTORY_SEPARATOR . 'bitpaycheckout'
+require(__DIR__ . DIRECTORY_SEPARATOR . 'bitpaycheckout'
                      . DIRECTORY_SEPARATOR .  'vendor'
                      . DIRECTORY_SEPARATOR . 'autoload.php');
 
@@ -75,8 +75,6 @@ if (!Capsule::schema()->hasTable('_bitpay_checkout_transactions')) {
  * * radio
  * * textarea
  *
- * Examples of each field type and their possible configuration parameters are
- * provided in the sample function below.
  *
  * @see https://developers.whmcs.com/payment-gateways/configuration/
  *
@@ -140,7 +138,7 @@ function bitpaycheckout_link($config_params)
     }
     $bitpay_checkout_mode = $config_params['bitpay_checkout_mode'];
 
-    $curpage = basename($_SERVER["SCRIPT_FILENAME"]);
+    $curpage = basename($_SERVER['SCRIPT_FILENAME']);
     
     $curpage = str_replace("/", "", $curpage);
     if ($curpage != 'viewinvoice.php') {
@@ -196,12 +194,12 @@ function bitpaycheckout_link($config_params)
 
         $params->orderId = trim($invoiceId);
         // @phpcs:ignore Generic.Files.LineLength.TooLong
+        $protocol = 'https://';
+        // @phpcs:ignore Generic.Files.LineLength.TooLong
         $params->notificationURL = $protocol . $_SERVER['SERVER_NAME']. $dir . '/modules/gateways/bitpaycheckout/callback/bitpaycheckout_ipn.php';
         // @phpcs:ignore Generic.Files.LineLength.TooLong
         $params->redirectURL = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
         $params->fullNotifications = true;
-
-        $protocol = 'https://';
 
         // @phpcs:ignore Generic.Files.LineLength.TooLong
         $notificationURL = $protocol . $_SERVER['SERVER_NAME'] . $dir . '/modules/gateways/bitpaycheckout/callback/bitpaycheckout_ipn.php';
@@ -232,11 +230,11 @@ function bitpaycheckout_link($config_params)
         $invoice->setBuyer($buyer);
         $basicInvoice = $client->createInvoice($invoice, Facade::POS, false);
 
-        error_log("=======USER LOADED BITPAY CHECKOUT INVOICE=====");
+        error_log('=======USER LOADED BITPAY CHECKOUT INVOICE=====');
         error_log(date('d.m.Y H:i:s'));
-        error_log("=======END OF INVOICE==========================");
+        error_log('=======END OF INVOICE==========================');
         
-        #insert into the database
+        // Insert into the database
         $pdo = Capsule::connection()->getPdo();
         $pdo->beginTransaction();
     
@@ -277,7 +275,7 @@ function bitpaycheckout_link($config_params)
 
         var payment_status = null;
         var is_paid = false;
-        window.addEventListener("message", function(event) {
+        window.addEventListener('message', function(event) {
             payment_status = event.data.status;
             if(payment_status == 'paid' || payment_status == 'confirmed' || payment_status == 'complete'){
                 is_paid = true;
