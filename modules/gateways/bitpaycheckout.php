@@ -195,6 +195,7 @@ function bitpaycheckout_link($config_params)
         $params->orderId = trim($invoiceId);
         // @phpcs:ignore Generic.Files.LineLength.TooLong
         $protocol = 'https://';
+        // @phpcs:ignore Generic.Files.LineLength.TooLong
         $params->notificationURL = $protocol . $_SERVER['SERVER_NAME']. $dir . '/modules/gateways/bitpaycheckout/callback/bitpaycheckout_ipn.php';
         // @phpcs:ignore Generic.Files.LineLength.TooLong
         $params->redirectURL = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
