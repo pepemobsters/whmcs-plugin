@@ -6,14 +6,13 @@
     "category": "payments",
     "description": {
         "name": "BitPay Checkout",
-        "tagline": "Accept payments via crypto currency using BitPay",
+        "tagline": "Accept cryptocurrency payments using BitPay",
         "features": [
-            "Accept bitcoin and bitcoin cash payments from payment protocol compatible wallets",
-            "Price in your local currency",
-            "Get settled via Bank transfer (EUR, USD, GBP or any of the supported fiat currencies), BTC, BCH, ETH, WBTC, LTC, DOGE, XRP or stable coins (USDC, GUSD, PAXOS, BUSD and DAI)",
-            "By design, chargebacks are not possible with cryptocurrency payments",
-            "Have an overview of all your bitcoin and bitcoin cash payments in your BitPay merchant account at https://bitpay.com/dashboard",
-            "Refund your customers in bitcoin or bitcoin cash in your BitPay merchant dashboard at https://bitpay.com/dashboard/payments"
+            "Accept payment in all major cryptocurrencies including BTC, ETH, USDC, LTC, and more. Customers can use any crypto wallet to pay",
+            "Price all payments in your local currency and let BitPay handle the conversion to crypto",
+            "Get settled daily via bank transfer (USD, EUR, GBP, etc.) or in your preferred cryptocurrency",
+            "No chargeback risk associated with crypto payments",
+            "Manage and track your crypto payments and merchant account using BitPay's web portal"
           ]
     },
     "logo": {
