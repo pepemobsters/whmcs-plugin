@@ -55,17 +55,17 @@
         },
         {
             "name": "bitpay/sdk",
-            "version": "9.0.2",
-            "version_normalized": "9.0.2.0",
+            "version": "9.0.3",
+            "version_normalized": "9.0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bitpay/php-bitpay-client-v2.git",
-                "reference": "535421a7738a9d789b00f3a27b7a53dfaba50165"
+                "reference": "396d75a03cc9ed7dd2f81235b9ba6699b3fdccf5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bitpay/php-bitpay-client-v2/zipball/535421a7738a9d789b00f3a27b7a53dfaba50165",
-                "reference": "535421a7738a9d789b00f3a27b7a53dfaba50165",
+                "url": "https://api.github.com/repos/bitpay/php-bitpay-client-v2/zipball/396d75a03cc9ed7dd2f81235b9ba6699b3fdccf5",
+                "reference": "396d75a03cc9ed7dd2f81235b9ba6699b3fdccf5",
                 "shasum": ""
             },
             "require": {
@@ -81,7 +81,7 @@
             "require-dev": {
                 "phpunit/phpunit": "^9.0 || ^10.2.2"
             },
-            "time": "2024-05-07T20:41:14+00:00",
+            "time": "2024-06-20T00:08:39+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -111,7 +111,7 @@
             ],
             "support": {
                 "issues": "https://github.com/bitpay/php-bitpay-client-v2/issues",
-                "source": "https://github.com/bitpay/php-bitpay-client-v2/tree/9.0.2"
+                "source": "https://github.com/bitpay/php-bitpay-client-v2/tree/9.0.3"
             },
             "install-path": "../bitpay/sdk"
         },
@@ -777,17 +777,17 @@
         },
         {
             "name": "symfony/console",
-            "version": "v6.4.8",
-            "version_normalized": "6.4.8.0",
+            "version": "v6.4.9",
+            "version_normalized": "6.4.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "be5854cee0e8c7b110f00d695d11debdfa1a2a91"
+                "reference": "6edb5363ec0c78ad4d48c5128ebf4d083d89d3a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/be5854cee0e8c7b110f00d695d11debdfa1a2a91",
-                "reference": "be5854cee0e8c7b110f00d695d11debdfa1a2a91",
+                "url": "https://api.github.com/repos/symfony/console/zipball/6edb5363ec0c78ad4d48c5128ebf4d083d89d3a9",
+                "reference": "6edb5363ec0c78ad4d48c5128ebf4d083d89d3a9",
                 "shasum": ""
             },
             "require": {
@@ -820,7 +820,7 @@
                 "symfony/stopwatch": "^5.4|^6.0|^7.0",
                 "symfony/var-dumper": "^5.4|^6.0|^7.0"
             },
-            "time": "2024-05-31T14:49:08+00:00",
+            "time": "2024-06-28T09:49:33+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -854,7 +854,7 @@
                 "terminal"
             ],
             "support": {
-                "source": "https://github.com/symfony/console/tree/v6.4.8"
+                "source": "https://github.com/symfony/console/tree/v6.4.9"
             },
             "funding": [
                 {
@@ -1360,17 +1360,17 @@
         },
         {
             "name": "symfony/string",
-            "version": "v6.4.8",
-            "version_normalized": "6.4.8.0",
+            "version": "v6.4.9",
+            "version_normalized": "6.4.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/string.git",
-                "reference": "a147c0f826c4a1f3afb763ab8e009e37c877a44d"
+                "reference": "76792dbd99690a5ebef8050d9206c60c59e681d7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/string/zipball/a147c0f826c4a1f3afb763ab8e009e37c877a44d",
-                "reference": "a147c0f826c4a1f3afb763ab8e009e37c877a44d",
+                "url": "https://api.github.com/repos/symfony/string/zipball/76792dbd99690a5ebef8050d9206c60c59e681d7",
+                "reference": "76792dbd99690a5ebef8050d9206c60c59e681d7",
                 "shasum": ""
             },
             "require": {
@@ -1390,7 +1390,7 @@
                 "symfony/translation-contracts": "^2.5|^3.0",
                 "symfony/var-exporter": "^5.4|^6.0|^7.0"
             },
-            "time": "2024-05-31T14:49:08+00:00",
+            "time": "2024-06-28T09:25:38+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -1429,7 +1429,7 @@
                 "utf8"
             ],
             "support": {
-                "source": "https://github.com/symfony/string/tree/v6.4.8"
+                "source": "https://github.com/symfony/string/tree/v6.4.9"
             },
             "funding": [
                 {
