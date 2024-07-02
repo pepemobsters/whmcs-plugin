@@ -15,7 +15,6 @@ class ComposerStaticInit883de7763c632e9142ab66ff1fe84b5d
         'e69f7f6ee287b969198c3c9d6777bd38' => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer/bootstrap.php',
         'b6b991a57620e2fb6b2f66f03fe9ddc2' => __DIR__ . '/..' . '/symfony/string/Resources/functions.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
-        'ac85c58d10c488add8202dd5bed1fbaf' => __DIR__ . '/../..' . '/lib/functions.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -29,7 +28,6 @@ class ComposerStaticInit883de7763c632e9142ab66ff1fe84b5d
             'Symfony\\Component\\Yaml\\' => 23,
             'Symfony\\Component\\String\\' => 25,
             'Symfony\\Component\\Console\\' => 26,
-            'Sample\\' => 7,
         ),
         'P' => 
         array (
@@ -82,10 +80,6 @@ class ComposerStaticInit883de7763c632e9142ab66ff1fe84b5d
         'Symfony\\Component\\Console\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/console',
-        ),
-        'Sample\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/lib/Sample',
         ),
         'Psr\\Http\\Message\\' => 
         array (
