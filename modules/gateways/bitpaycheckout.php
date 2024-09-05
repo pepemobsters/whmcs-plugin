@@ -149,8 +149,8 @@ function bitpaycheckout_link($config_params)
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <?php
-
-    $client = new PosClient($bitpay_checkout_token, $bitpay_checkout_endpoint);
+    $platformInfo = 'BitPay_WHCMS_v5.1.0';
+    $client = new PosClient($bitpay_checkout_token, $bitpay_checkout_endpoint, $platformInfo);
 
     // Check to make sure we don't already have a valid BitPay Invoice active
     $checkDup = Capsule::table('_bitpay_checkout_transactions')
